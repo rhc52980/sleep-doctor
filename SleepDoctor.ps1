@@ -217,7 +217,12 @@ if ($isAdmin -and (($req -join "`n") -notmatch 'requires administrator|administr
     $cur = $null
     foreach ($line in $req) {
         if ($line -match '^([A-Z ]+):\s*$') { $cur = $Matches[1].Trim(); $reqs[$cur] = @(); continue }
-        if ($cur -and $line.Trim() -and $line.Trim() -ne 'None.') { $reqs[$cur] += $line.Trim() }
+        if ($cur -and $line.Trim() -and $line.Trim() -ne 'None.') {
+            $tl = $line.Trim()
+            # a request is "[TYPE] path" followed by an optional description line - keep them together as one item
+            if ($tl -notmatch '^\[' -and @($reqs[$cur]).Count -gt 0) { $reqs[$cur][@($reqs[$cur]).Count - 1] += " ($tl)" }
+            else { $reqs[$cur] += $tl }
+        }
     }
     $blockCount = 0
     foreach ($k in 'SYSTEM', 'AWAYMODE', 'EXECUTION') {

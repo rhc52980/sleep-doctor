@@ -60,6 +60,11 @@ Prefer plain text you can read before running? Grab the repo and double-click
 
 ![Sleep history chart](docs/images/sleep-history.png)
 
+The **Details** sections open up for the receipts. Here, the power-requests table names the exact
+process that is holding sleep hostage:
+
+![Power requests detail](docs/images/power-requests.png)
+
 <details>
 <summary>Light mode</summary>
 
@@ -67,9 +72,9 @@ Prefer plain text you can read before running? Grab the repo and double-click
 
 </details>
 
-> 📸 *The screenshots are from a regular (non-admin) run on a desktop with classic S3 sleep, with the
-> computer name changed. Running as Administrator adds the "what's blocking sleep right now" and
-> wake-timer sections.*
+> 📸 *Screenshots are from an Administrator run on a desktop using classic S3 sleep. The computer
+> name, user name and the offending app's name are replaced with placeholders (`DESKTOP-DEMO`,
+> `ExampleApp`) so no real details are shown.*
 
 ---
 
