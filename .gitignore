@@ -1,0 +1,10 @@
+# built artifact - attached to GitHub Releases instead
+SleepDoctor.exe
+# generated reports
+SleepDoctor-*.html
+sleepstudy.html
+system-power-report.html
+energy-report.html
+_test/
+_t/
+.claude/
