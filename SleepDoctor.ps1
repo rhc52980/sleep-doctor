@@ -390,7 +390,14 @@ $wakeReasons  = if ($modern) { @($kp | Where-Object { $_.Id -eq $exitId } | ForE
 $enterGroups = @($enterReasons | Group-Object | Sort-Object Count -Descending)
 $wakeGroups  = @($wakeReasons | Group-Object | Sort-Object Count -Descending)
 $shortSessions = @($sessions | Where-Object { $_.Minutes -lt 2 })
-$totalAsleepH = (($sessions | Measure-Object Minutes -Sum).Sum) / 60
+# only count the part of each sleep that falls inside the 7-day window (a PC can sleep for weeks)
+$winStart = (Get-Date).AddDays(-7); $winEnd = Get-Date
+$totalAsleepH = 0
+foreach ($s in $sessions) {
+    $a = if ($s.Start -gt $winStart) { $s.Start } else { $winStart }
+    $b = if ($s.End -lt $winEnd) { $s.End } else { $winEnd }
+    if ($b -gt $a) { $totalAsleepH += ($b - $a).TotalHours }
+}
 if ($sessions.Count) {
     $idleEntries = @($enterReasons | Where-Object { $_ -match 'Idle' })
     if ($idleEntries.Count) { Add-Finding 'ok' 'The PC does go to sleep on its idle timeout' ("It entered sleep on idle timeout {0} times in the last 7 days." -f $idleEntries.Count) }
@@ -508,7 +515,8 @@ function Build-Timeline($sess, $days) {
                 $x1 = N ($ml + $pw * (($st - $day).TotalHours / 24))
                 $wd = N ([math]::Max(2.5, $pw * (($en - $st).TotalHours / 24)))
                 $cls = if ($s.Minutes -lt 2) { 'short' } else { 'ok' }
-                $tip = ("Asleep {0} - {1} ({2} min)" -f $s.Start.ToString('MMM d HH:mm'), $s.End.ToString('HH:mm'), $s.Minutes)
+                $len = if ($s.Minutes -ge 120) { ("{0:N1} hours" -f ($s.Minutes / 60)) } else { ("{0} min" -f $s.Minutes) }
+                $tip = ("Asleep {0} to {1} ({2})" -f $s.Start.ToString('MMM d HH:mm'), $s.End.ToString('MMM d HH:mm'), $len)
                 [void]$sb.Append("<rect x='$x1' y='$($y + 3)' width='$wd' height='18' rx='2' class='$cls tipme' data-tip='" + (Enc $tip) + "'/>")
             }
         }
