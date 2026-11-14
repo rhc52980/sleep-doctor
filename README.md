@@ -1,3 +1,5 @@
+![Sleep Doctor: your PC has insomnia, Dr. Sleep will see it now](docs/images/social-preview.png)
+
 # 🩺 Sleep Doctor
 
 ### *Your PC has insomnia. Dr. Sleep will see it now.*
