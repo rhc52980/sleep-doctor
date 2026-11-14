@@ -67,6 +67,19 @@ process that is holding sleep hostage:
 
 ![Power requests detail](docs/images/power-requests.png)
 
+### Modern Standby view
+
+On a PC that uses **Modern Standby** (the phone-style sleep, common on newer desktops and laptops) the
+dashboard says so up front, explains why the fans may keep spinning, and still shows whether the PC
+really sleeps on its idle timeout:
+
+![Sleep Doctor on a Modern Standby PC](docs/images/modern-standby.png)
+
+The **Sleep mode and states** section shows exactly which sleep states the firmware offers
+(here: only S0 Low Power Idle, with classic S3 disabled):
+
+![Modern Standby sleep states](docs/images/modern-standby-details.png)
+
 <details>
 <summary>Light mode</summary>
 
@@ -74,7 +87,7 @@ process that is holding sleep hostage:
 
 </details>
 
-> 📸 *Screenshots are from an Administrator run on a desktop using classic S3 sleep. The computer
+> 📸 *Screenshots are from Administrator runs on desktops (one classic S3, one Modern Standby). The computer
 > name, user name and the offending app's name are replaced with placeholders (`DESKTOP-DEMO`,
 > `ExampleApp`) so no real details are shown.*
 
