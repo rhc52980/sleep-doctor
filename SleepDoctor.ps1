@@ -721,8 +721,8 @@ if ($reqReadable) {
     Put (Section 'd-req' 'Power requests (what is blocking sleep now)' 'needs admin' (Empty-Msg 'Run Sleep Doctor as Administrator to read power requests.'))
 }
 if ($reqReadable) {
-    $tb = if ($timers.Count) { (Tbl @('Set by', 'Expires', 'Reason') ($timers | ForEach-Object { , @($_.Owner, $_.Expires, $_.Reason) })) } else { Empty-Msg 'No active wake timers.' }
-    $tk = if ($wakeTasks.Count) { "<p class='note'>Scheduled tasks allowed to wake the PC:</p>" + (Tbl @('Task', 'State', 'Next run') ($wakeTasks | ForEach-Object { , @($_.Task, $_.State, $_.Next) })) } else { '' }
+    $tb = if ($timers.Count) { (Tbl @('Set by', 'Expires', 'Reason') @($timers | ForEach-Object { , @($_.Owner, $_.Expires, $_.Reason) })) } else { Empty-Msg 'No active wake timers.' }
+    $tk = if ($wakeTasks.Count) { "<p class='note'>Scheduled tasks allowed to wake the PC:</p>" + (Tbl @('Task', 'State', 'Next run') @($wakeTasks | ForEach-Object { , @($_.Task, $_.State, $_.Next) })) } else { '' }
     Put (Section 'd-timers' 'Wake timers and tasks' "$($timers.Count) timer(s)" ($tb + $tk))
 } else {
     Put (Section 'd-timers' 'Wake timers and tasks' 'needs admin' (Empty-Msg 'Run Sleep Doctor as Administrator to read wake timers.'))
